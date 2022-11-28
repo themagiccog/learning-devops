@@ -1,0 +1,7 @@
+https://tutlinks.com/fastapi-with-postgresql-crud-async/#for-postgresql-server-1
+https://dev.to/nditah/develop-a-simple-python-fastapi-todo-app-in-1-minute-8dg
+https://www.w3schools.com/howto/howto_js_todolist.asp
+
+
+python -m venv env
+source ./env/bin/activate
