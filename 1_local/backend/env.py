@@ -7,13 +7,13 @@ import pprint
   
 # Get the list of user's
 # environment variables
-# env_var = os.environ
+env_var = os.environ
 
   
-# # Print the list of user's
-# # environment variables
-# print("User's Environment variable:")
-# pprint.pprint(dict(env_var), width = 1)
+# Print the list of user's
+# environment variables
+print("User's Environment variable:")
+pprint.pprint(dict(env_var), width = 1)
 
-host_server = os.environ.get('LOGNAME')
-print(host_server)
+# host_server = os.environ.get('LOGNAME')
+# print(host_server)

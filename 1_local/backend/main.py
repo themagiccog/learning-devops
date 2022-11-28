@@ -1,5 +1,5 @@
 from typing import List
-import databases
+import databases 
 import sqlalchemy
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -31,13 +31,20 @@ notes = sqlalchemy.Table(
     sqlalchemy.Column("text", sqlalchemy.String),
     sqlalchemy.Column("completed", sqlalchemy.Boolean),
 )
-
-
+# Using SQLite DB
 engine = sqlalchemy.create_engine(
-    DATABASE_URL, pool_size=3, max_overflow=0
+    DATABASE_URL, connect_args={"check_same_thread": False}
 )
 metadata.create_all(engine)
 
+# # Using PostgreSQL
+# engine = sqlalchemy.create_engine(
+#     DATABASE_URL, pool_size=3, max_overflow=0
+# )
+# metadata.create_all(engine)
+
+
+# This is Model (using Pydantic)
 class NoteIn(BaseModel):
     text: str
     completed: bool
@@ -47,6 +54,7 @@ class Note(BaseModel):
     text: str
     completed: bool
 
+# This is for OpenAPI settings
 app = FastAPI(title = "REST API using FastAPI PostgreSQL Async EndPoints")
 app.add_middleware(
     CORSMiddleware,

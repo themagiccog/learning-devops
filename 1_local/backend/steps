@@ -3,5 +3,8 @@ https://dev.to/nditah/develop-a-simple-python-fastapi-todo-app-in-1-minute-8dg
 https://www.w3schools.com/howto/howto_js_todolist.asp
 
 
+pip install fastapi uvicorn gunicorn 'databases[postgresql]'
+pip install 'databases[sqlite]'
+
 python -m venv env
 source ./env/bin/activate
