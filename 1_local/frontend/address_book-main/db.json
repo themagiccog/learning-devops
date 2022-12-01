@@ -1,0 +1,64 @@
+{
+  "contacts": [
+    {
+      "id": 2,
+      "name": "Male",
+      "address": "Mars",
+      "is_male": true
+    },
+    {
+      "name": "black",
+      "address": "uito",
+      "is_male": false,
+      "id": 3
+    },
+    {
+      "name": "pink",
+      "address": "uito",
+      "is_male": false,
+      "id": 4
+    },
+    {
+      "name": "fjfjfjf",
+      "address": "lsldlkdk",
+      "is_male": "false",
+      "id": 5
+    },
+    {
+      "name": "AmmoniaFlows",
+      "address": "13543 BLUE MARLIN LANE",
+      "is_male": "false",
+      "id": 6
+    },
+    {
+      "name": "Alt",
+      "address": "345tttyy",
+      "is_male": "false",
+      "id": 7
+    },
+    {
+      "name": "hyuualt",
+      "address": "mic",
+      "is_male": "true",
+      "id": 8
+    },
+    {
+      "name": "alyyyt",
+      "address": "jjbggqhk",
+      "is_male": "true",
+      "id": 9
+    },
+    {
+      "id": 10,
+      "name": "Testis",
+      "address": "Scrot",
+      "is_male": "true"
+    },
+    {
+      "id": 11,
+      "name": "34wewtetret",
+      "address": "4353 Prosperity Trce",
+      "is_male": "false"
+    }
+  ]
+}

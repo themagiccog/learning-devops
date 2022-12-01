@@ -1,0 +1,34 @@
+<div class="no-style" style="margin-left: 4px">
+  <div class="container">
+    <h1>New Contact</h1>
+    <form>
+      {{ defaultcontact | json }}
+      <div class="form-group">
+        <label for="name">Name</label>
+        <span><input type="text" class="form-control" id="name" required></span>
+      </div>
+
+      <div class="form-group">
+        <label for="power">Address</label>
+        <select class="form-control" id="power" required>
+          <option *ngFor="let ad of address" [value]="ad">{{ ad }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="alterEgo">Sex</label><br>
+        <input type="radio" id="html" name="fav_language" value="HTML">
+        <label for="html"> Female </label><br>
+        <input type="radio" id="html" name="fav_language" value="HTML">
+        <label for="html"> Male </label><br>
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+  </div>
+</div>
+
+<br>
+<br>
+

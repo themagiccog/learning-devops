@@ -3,8 +3,21 @@ https://dev.to/nditah/develop-a-simple-python-fastapi-todo-app-in-1-minute-8dg
 https://www.w3schools.com/howto/howto_js_todolist.asp
 
 
-pip install fastapi uvicorn gunicorn 'databases[postgresql]'
-pip install 'databases[sqlite]'
+pip install fastapi uvicorn gunicorn 'databases[postgresql]' 'databases[sqlite]'
+pip install 'databases[aiosqlite]'
 
 python -m venv env
 source ./env/bin/activate
+
+
+FrontEnd (Angular):
+https://www.youtube.com/watch?v=nbFmHD4T04k
+https://www.youtube.com/watch?v=prDqgK_Sh3Q
+https://www.youtube.com/watch?v=xaYuxILKBlo
+https://www.youtube.com/watch?v=ls620HliiCw&list=RDCMUCtb40EQj2inp8zuaQlLx3iQ&start_radio=1&rv=ls620HliiCw&t=189
+
+
+curl -X POST "http://localhost:8000/contacts/" \
+ -H "accept: application/json" \
+ -H "Content-Type: application/json" \
+ -d "{\"name\":\"Mark Spencer\",\"address\":\"Get Groceries from the store\",\"is_male\":false}"

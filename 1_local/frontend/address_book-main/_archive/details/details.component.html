@@ -1,0 +1,13 @@
+<p>details works!</p>
+
+<ul>
+  <li *ngFor="let item of contactdetails;" >{{item.name}} </li>
+</ul>
+
+
+<ng-container *ngFor="let item of contactdetails;" >
+  <ul>
+    <li *ngIf="item.is_male">{{item.name}} - MALE</li>
+    <li *ngIf="!item.is_male">{{item.name}} - FEMALE</li>
+  </ul>
+</ng-container>

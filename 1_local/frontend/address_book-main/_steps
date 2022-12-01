@@ -1,0 +1,69 @@
+Create Base Wireframe:
+
+Install Linting tools:
+> npm install -g tslint
+> npm install -g eslint
+
+Install Angular
+> npm install -g @angular/cli@latest
+# Add to PATH
+
+Start New Project:
+> ng new address_book
+> npm install popper.js --save
+> npm install jquery --save
+> npm install bootstrap --save
+
+
+Install other Modules:
+> npm install @fortawesome/fontawesome-free --save
+
+Serve App:
+> ng serve
+
+Modify tsconfig.json:
+replace ["baseUrl": "./"] with ["baseUrl": "./src"]
+This is to remove swiggly errors in app-routing.module.ts
+
+Create 3 components:
+- Home
+- Details
+- New
+> ng generate component home
+> ng g c details
+> ng g c new
+> ng g service contact  
+
+Create Routes (see wireframe):
+  To do routing, select the app-routing.module.ts file,
+  Import the components you want to work on in the file:
+  e.g.
+    import { HomeComponent } from './home/home.component';
+    import { DetailsComponent } from './details/details.component';
+    import { NewComponent } from './new/new.component';
+
+  In the "routes: Routes", update the path (e.g like below)
+    const routes: Routes = [
+      {path: 'home', component: HomeComponent},
+      {path: 'details',component: DetailsComponent},
+      {path: 'new',component: NewComponent},
+      {path: '', redirectTo:'home', pathMatch: 'full'}
+    ];
+
+  Then in the html, you can refer to that route by using the routerLink command. eg:
+    <ul>
+      <li><a routerLink="/details">details</a></li>
+      <li><a routerLink="/home">home</a></li>
+      <li><a routerLink="/new">new</a></li>
+    </ul>
+    #put this in ever component html.
+  Test routing:
+
+Setup Mock DB (json-server)
+> npm install -g json-server
+Create file to host json file:
+> cat ./json_server/db.json
+
+Run Mock Server:
+> json-server --watch db.json --port 7878
+

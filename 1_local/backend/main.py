@@ -1,58 +1,13 @@
 from typing import List
-import databases 
-import sqlalchemy
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 import os
 import urllib
-
-## SQLite
-DATABASE_URL = "sqlite:///./test.db"
-
-# ## POSTGRESQL
-# host_server = os.environ.get('host_server', 'localhost')
-# db_server_port = urllib.parse.quote_plus(str(os.environ.get('db_server_port', '5432')))
-# database_name = os.environ.get('database_name', 'fastapi')
-# db_username = urllib.parse.quote_plus(str(os.environ.get('db_username', 'postgres')))
-# db_password = urllib.parse.quote_plus(str(os.environ.get('db_password', 'secret')))
-# ssl_mode = urllib.parse.quote_plus(str(os.environ.get('ssl_mode','prefer')))
-# DATABASE_URL = 'postgresql://{}:{}@{}:{}/{}?sslmode={}'.format(db_username, db_password, host_server, db_server_port, database_name, ssl_mode)
-# #If database server required SSL then replace prefer with required in the DATABASE_URL connection string for PostgreSQL.
-
-database = databases.Database(DATABASE_URL)
-
-metadata = sqlalchemy.MetaData()
-
-notes = sqlalchemy.Table(
-    "notes",
-    metadata,
-    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
-    sqlalchemy.Column("text", sqlalchemy.String),
-    sqlalchemy.Column("completed", sqlalchemy.Boolean),
-)
-# Using SQLite DB
-engine = sqlalchemy.create_engine(
-    DATABASE_URL, connect_args={"check_same_thread": False}
-)
-metadata.create_all(engine)
-
-# # Using PostgreSQL
-# engine = sqlalchemy.create_engine(
-#     DATABASE_URL, pool_size=3, max_overflow=0
-# )
-# metadata.create_all(engine)
+from db import database, contacts
+from model import  Contact, ContactIn 
+# from model import notes, Note, NoteIn
 
 
-# This is Model (using Pydantic)
-class NoteIn(BaseModel):
-    text: str
-    completed: bool
-
-class Note(BaseModel):
-    id: int
-    text: str
-    completed: bool
 
 # This is for OpenAPI settings
 app = FastAPI(title = "REST API using FastAPI PostgreSQL Async EndPoints")
@@ -71,31 +26,62 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
     await database.disconnect()
-
-@app.get("/notes/", response_model=List[Note], status_code = status.HTTP_200_OK)
-async def read_notes(skip: int = 0, take: int = 20):
-    query = notes.select().offset(skip).limit(take)
+    
+    
+@app.get("/contacts/", response_model=List[Contact], status_code = status.HTTP_200_OK)
+async def read_contacts(skip: int = 0, take: int = 20):
+    query = contacts.select().offset(skip).limit(take)
     return await database.fetch_all(query)
 
-@app.get("/notes/{note_id}/", response_model=Note, status_code = status.HTTP_200_OK)
-async def read_notes(note_id: int):
-    query = notes.select().where(notes.c.id == note_id)
+@app.get("/contacts/{contact_id}/", response_model=Contact, status_code = status.HTTP_200_OK)
+async def read_contacts(contact_id: int):
+    query = contacts.select().where(contacts.c.id == contact_id)
     return await database.fetch_one(query)
 
-@app.post("/notes/", response_model=Note, status_code = status.HTTP_201_CREATED)
-async def create_note(note: NoteIn):
-    query = notes.insert().values(text=note.text, completed=note.completed)
+@app.post("/contacts/", response_model=Contact, status_code = status.HTTP_201_CREATED)
+async def create_contact(contact: ContactIn):
+    query = contacts.insert().values(name=contact.name, address=contact.address, is_male=contact.is_male)
     last_record_id = await database.execute(query)
-    return {**note.dict(), "id": last_record_id}
+    return {**contact.dict(), "id": last_record_id}
 
-@app.put("/notes/{note_id}/", response_model=Note, status_code = status.HTTP_200_OK)
-async def update_note(note_id: int, payload: NoteIn):
-    query = notes.update().where(notes.c.id == note_id).values(text=payload.text, completed=payload.completed)
+@app.put("/contacts/{contact_id}/", response_model=Contact, status_code = status.HTTP_200_OK)
+async def update_contact(contact_id: int, payload: ContactIn):
+    query = contacts.update().where(contacts.c.id == contact_id).values(name=payload.name, address=payload.address, is_male=payload.is_male)
     await database.execute(query)
-    return {**payload.dict(), "id": note_id}
+    return {**payload.dict(), "id": contact_id}
 
-@app.delete("/notes/{note_id}/", status_code = status.HTTP_200_OK)
-async def delete_note(note_id: int):
-    query = notes.delete().where(notes.c.id == note_id)
+@app.delete("/contacts/{contact_id}/", status_code = status.HTTP_200_OK)
+async def delete_contact(contact_id: int):
+    query = contacts.delete().where(contacts.c.id == contact_id)
     await database.execute(query)
-    return {"message": "Note with id: {} deleted successfully!".format(note_id)}
+    return {"message": "Contact with id: {} deleted successfully!".format(contact_id)}
+
+
+
+# @app.get("/notes/", response_model=List[Note], status_code = status.HTTP_200_OK)
+# async def read_notes(skip: int = 0, take: int = 20):
+#     query = notes.select().offset(skip).limit(take)
+#     return await database.fetch_all(query)
+
+# @app.get("/notes/{note_id}/", response_model=Note, status_code = status.HTTP_200_OK)
+# async def read_notes(note_id: int):
+#     query = notes.select().where(notes.c.id == note_id)
+#     return await database.fetch_one(query)
+
+# @app.post("/notes/", response_model=Note, status_code = status.HTTP_201_CREATED)
+# async def create_note(note: NoteIn):
+#     query = notes.insert().values(text=note.text, completed=note.completed)
+#     last_record_id = await database.execute(query)
+#     return {**note.dict(), "id": last_record_id}
+
+# @app.put("/notes/{note_id}/", response_model=Note, status_code = status.HTTP_200_OK)
+# async def update_note(note_id: int, payload: NoteIn):
+#     query = notes.update().where(notes.c.id == note_id).values(text=payload.text, completed=payload.completed)
+#     await database.execute(query)
+#     return {**payload.dict(), "id": note_id}
+
+# @app.delete("/notes/{note_id}/", status_code = status.HTTP_200_OK)
+# async def delete_note(note_id: int):
+#     query = notes.delete().where(notes.c.id == note_id)
+#     await database.execute(query)
+#     return {"message": "Note with id: {} deleted successfully!".format(note_id)}
