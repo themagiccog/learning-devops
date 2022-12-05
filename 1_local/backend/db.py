@@ -16,9 +16,7 @@ DATABASE_URL = "sqlite:///./testx.db"
 # #If database server required SSL then replace prefer with required in the DATABASE_URL connection string for PostgreSQL.
 
 database = databases.Database(DATABASE_URL)
-
 metadata = sqlalchemy.MetaData()
-
 contacts = sqlalchemy.Table(
     "contacts",
     metadata,
@@ -26,16 +24,16 @@ contacts = sqlalchemy.Table(
     sqlalchemy.Column("name", sqlalchemy.String),
     sqlalchemy.Column("address", sqlalchemy.String),
     sqlalchemy.Column("is_male", sqlalchemy.Boolean),
-)   
+)
 
 # Using SQLite DB
 engine = sqlalchemy.create_engine(
     DATABASE_URL, connect_args={"check_same_thread": False}
 )
-metadata.create_all(engine)
 
 # # Using PostgreSQL
 # engine = sqlalchemy.create_engine(
 #     DATABASE_URL, pool_size=3, max_overflow=0
 # )
-# metadata.create_all(engine)
+
+metadata.create_all(engine)
