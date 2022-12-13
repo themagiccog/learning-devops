@@ -1,0 +1,10 @@
+<p>details works!</p>
+
+  <li> {{contactdetails.id}}</li>
+  <li>{{contactdetails.name}}</li>
+  <li>{{contactdetails.address}}</li>
+  <li *ngIf="contactdetails?.is_male">MALE</li>
+  <li *ngIf="!contactdetails?.is_male">FEMALE</li>
+
+
+<a routerLink="/home"><button class="btn btn-success" > Home </button></a>
