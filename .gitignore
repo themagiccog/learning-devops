@@ -173,3 +173,4 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+1_local/frontend/address_book/.angular
