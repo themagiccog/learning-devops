@@ -174,4 +174,4 @@ testem.log
 .DS_Store
 Thumbs.db
 1_local/frontend/address_book/.angular/*
-1_local/frontend/address_book/node_modules
+1_local/frontend/address_book/node_modules/
