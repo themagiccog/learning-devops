@@ -140,7 +140,7 @@ dmypy.json
 /bazel-out
 
 # Node
-/node_modules
+*/node_modules/
 npm-debug.log
 yarn-error.log
 
@@ -174,3 +174,4 @@ testem.log
 .DS_Store
 Thumbs.db
 1_local/frontend/address_book/.angular/*
+1_local/frontend/address_book/node_modules
